@@ -30,6 +30,15 @@ class CsRouterosBouncer < Formula
     cp "config/cs-routeros-bouncer.yaml", config_dst unless config_dst.exist?
   end
 
+  def caveats
+    <<~EOS
+      Configuration file installed to:
+        #{etc}/cs-routeros-bouncer/cs-routeros-bouncer.yaml
+
+      Please edit this file to set up your RouterOS connection and bouncer settings.
+    EOS
+  end
+
   test do
     output = shell_output("#{bin}/cs-routeros-bouncer --version")
     assert_match version.to_s, output
