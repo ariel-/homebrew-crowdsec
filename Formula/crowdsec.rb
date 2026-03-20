@@ -24,6 +24,8 @@ class Crowdsec < Formula
     build_codename = "alphaga"
 
     ldflags = %W[
+      -s
+      -w
       -X github.com/crowdsecurity/go-cs-lib/version.Version=#{build_version}
       -X github.com/crowdsecurity/go-cs-lib/version.BuildDate=#{build_date}
       -X github.com/crowdsecurity/go-cs-lib/version.Tag=#{build_tag}
