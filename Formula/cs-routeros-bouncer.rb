@@ -10,6 +10,11 @@ class CsRouterosBouncer < Formula
 
   depends_on "go" => :build
 
+  ##
+  # Builds and installs the cs-routeros-bouncer executable and ensures a default configuration is installed.
+  #
+  # The built binary has the formula version embedded via linker flags and is installed to bin/"cs-routeros-bouncer".
+  # Creates the etc/cs-routeros-bouncer directory and copies config/cs-routeros-bouncer.yaml into it only if the destination file does not already exist.
   def install
     ldflags = %W[
       -s
