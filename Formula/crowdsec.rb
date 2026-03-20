@@ -11,19 +11,33 @@ class Crowdsec < Formula
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args(output: "crowdsec"), "./cmd/crowdsec"
-    system "go", "build", *std_go_args(output: "cscli"), "./cmd/crowdsec-cli"
-
-    # Install binaries
-    bin.install "crowdsec"
-    bin.install "cscli"
-
     # Install default configuration (Homebrew-friendly paths)
     lib_dir = var/"lib/crowdsec"
     usr_dir = lib/"crowdsec"
     data_dir = lib_dir/"data"
     config_dir = etc/"crowdsec"
     plugin_dir = usr_dir/"plugins"
+
+    build_version = "v#{version}"
+    build_date = Time.now.strftime("%F_%T")
+    build_tag = "eacc819"
+    build_codename = "alphaga"
+
+    ldflags = %W[
+      -X github.com/crowdsecurity/go-cs-lib/version.Version=#{build_version}
+      -X github.com/crowdsecurity/go-cs-lib/version.BuildDate=#{build_date}
+      -X github.com/crowdsecurity/go-cs-lib/version.Tag=#{build_tag}
+      -X github.com/crowdsecurity/crowdsec/pkg/cwversion.Codename=#{build_codename}
+      -X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultConfigDir=#{config_dir}
+      -X github.com/crowdsecurity/crowdsec/pkg/csconfig.defaultDataDir=#{data_dir}
+    ].join(" ")
+
+    system "go", "build", *std_go_args(output: "crowdsec", ldflags: ldflags), "./cmd/crowdsec"
+    system "go", "build", *std_go_args(output: "cscli", ldflags: ldflags), "./cmd/crowdsec-cli"
+
+    # Install binaries
+    bin.install "crowdsec"
+    bin.install "cscli"
 
     data_dir.mkpath
     (config_dir/"acquis.d").mkpath
@@ -76,15 +90,15 @@ class Crowdsec < Formula
       This formula does NOT run any setup wizard; you must edit the config and
       run CrowdSec manually. Example:
 
-        crowdsec -c #{etc}/crowdsec/config.yaml
+        crowdsec
 
       To manage the hub (parsers, scenarios, bouncers):
 
-        cscli -c #{etc}/crowdsec/config.yaml hub update
+        cscli hub update
 
       The default installation does not register against LAPI, to do so, you can run:
-        cscli -c #{etc}/crowdsec/config.yaml machines add --force "ID" -a -f "#{etc}/crowdsec/local_api_credentials.yaml"
-        cscli -c #{etc}/crowdsec/config.yaml capi register
+        cscli machines add --force $(system_profiler SPHardwareDataType | grep "Hardware UUID" | awk -F': ' '{print $2}') -a -f "#{etc}/crowdsec/local_api_credentials.yaml"
+        cscli capi register
     EOS
   end
 
