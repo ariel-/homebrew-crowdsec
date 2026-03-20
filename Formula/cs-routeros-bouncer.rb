@@ -26,6 +26,7 @@ class CsRouterosBouncer < Formula
   end
 
   test do
-    system bin/"cs-routeros-bouncer", "--version"
+    output = shell_output("#{bin}/cs-routeros-bouncer --version")
+    assert_match version.to_s, output
   end
 end
