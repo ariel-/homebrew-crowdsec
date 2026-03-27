@@ -16,10 +16,15 @@ class CsRouterosBouncer < Formula
   # The built binary has the formula version embedded via linker flags and is installed to bin/"cs-routeros-bouncer".
   # Creates the etc/cs-routeros-bouncer directory and copies config/cs-routeros-bouncer.yaml into it only if the destination file does not already exist.
   def install
+    commit = "e3c9e13"
+    build_date = Time.now.utc.strftime("%FT%TZ")
+
     ldflags = %W[
       -s
       -w
       -X github.com/jmrplens/cs-routeros-bouncer/internal/config.Version=v#{version}
+      -X github.com/jmrplens/cs-routeros-bouncer/internal/config.Commit=#{commit}
+      -X github.com/jmrplens/cs-routeros-bouncer/internal/config.BuildDate=#{build_date}
     ].join(" ")
 
     system "go", "build", *std_go_args(output: bin/"cs-routeros-bouncer", ldflags: ldflags), "./cmd/cs-routeros-bouncer"

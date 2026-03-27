@@ -19,7 +19,7 @@ class Crowdsec < Formula
     plugin_dir = usr_dir/"plugins"
 
     build_version = "v#{version}"
-    build_date = Time.now.strftime("%F_%T")
+    build_date = Time.now.utc.strftime("%F_%T")
     build_tag = "eacc819"
     build_codename = "alphaga"
 
