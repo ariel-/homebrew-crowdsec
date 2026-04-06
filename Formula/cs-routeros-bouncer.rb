@@ -25,6 +25,7 @@ class CsRouterosBouncer < Formula
       -X github.com/jmrplens/cs-routeros-bouncer/internal/config.Version=v#{version}
       -X github.com/jmrplens/cs-routeros-bouncer/internal/config.Commit=#{commit}
       -X github.com/jmrplens/cs-routeros-bouncer/internal/config.BuildDate=#{build_date}
+      -X github.com/crowdsecurity/go-cs-lib/version.Version=v#{version}
     ].join(" ")
 
     system "go", "build", *std_go_args(output: bin/"cs-routeros-bouncer", ldflags: ldflags), "./cmd/cs-routeros-bouncer"
