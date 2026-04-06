@@ -5,8 +5,8 @@
 class Crowdsec < Formula
   desc "Open-source and participative security solution"
   homepage "https://crowdsec.net"
-  url "https://github.com/crowdsecurity/crowdsec/archive/refs/tags/v1.7.6.tar.gz"
-  sha256 "1be0c4e7d3e437698203f6badac323b7e4d9c461716274df879ebb3ae054ca4e"
+  url "https://github.com/crowdsecurity/crowdsec/archive/refs/tags/v1.7.7.tar.gz"
+  sha256 "a666f64806c354665f955207ce2c2d8ad08442cb7b569bd039fd65032cef97e1"
 
   depends_on "go" => :build
 
@@ -20,7 +20,7 @@ class Crowdsec < Formula
 
     build_version = "v#{version}"
     build_date = Time.now.utc.strftime("%F_%T")
-    build_tag = "eacc819"
+    build_tag = "027974f"
     build_codename = "alphaga"
 
     ldflags = %W[
