@@ -4,8 +4,8 @@
 class CsRouterosBouncer < Formula
   desc "CrowdSec bouncer for MikroTik RouterOS — manages address lists and firewall rules via the RouterOS API"
   homepage "https://jmrplens.github.io/cs-routeros-bouncer/"
-  url "https://github.com/jmrplens/cs-routeros-bouncer/archive/refs/tags/v1.3.4.tar.gz"
-  sha256 "dffc9b57e31df052766d126ec8da7fea49b81da1232e01d6973d06d149929e5d"
+  url "https://github.com/jmrplens/cs-routeros-bouncer/archive/refs/tags/v1.4.4.tar.gz"
+  sha256 "f040ea3fdae8a4179f7045738b0375cd2a0fddfbbac6e6f8a8917bc8ef6fe282"
   license "MIT"
 
   depends_on "go" => :build
@@ -16,7 +16,7 @@ class CsRouterosBouncer < Formula
   # The built binary has the formula version embedded via linker flags and is installed to bin/"cs-routeros-bouncer".
   # Creates the etc/cs-routeros-bouncer directory and copies config/cs-routeros-bouncer.yaml into it only if the destination file does not already exist.
   def install
-    commit = "35f70c8"
+    commit = "aadcf1f"
     build_date = Time.now.utc.strftime("%FT%TZ")
 
     ldflags = %W[
